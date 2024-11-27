@@ -3,3 +3,4 @@ dirt
 dirt-pa
 *.wav
 Makefile
+gmon.out
