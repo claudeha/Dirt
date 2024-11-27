@@ -644,7 +644,6 @@ void init_effects(t_sound *p) {
   if (p->attack >= 0 && p->release >= 0) {
     p->effects[p->num_effects++] = effect_env;
   }
-  p->effects[p->num_effects++] = effect_roundoff;
 }
 
 void init_sound(t_sound *sound) {
@@ -886,6 +885,7 @@ t_pan playback_effects(float value, t_sound *p, int channel) {
   for (int e = 0; e < p->num_effects; ++e) {
     value = p->effects[e](value, p, channel);
   }
+  value = effect_roundoff(value, p, channel);
   return effect_pan(value, p, channel);
 }
 
