@@ -259,24 +259,30 @@ const double coeff[5][11]= {
 float formant_filter(float in, t_sound *sound, int channel) {
   const double *c = coeff[sound->formant_vowelnum];
   double *h = sound->per_channel[channel].formant_history;
-  int i = sound->per_channel[channel].formant_history_index;
-  int j = i;
-  double res = c[0] * in;
-  for (int k = 1; k <= 10; ++k)
-  {
-    res += c[k] * h[j++];
-    if (j == 10)
-    {
-      j = 0;
-    }
-  }
-  --i;
-  if (i < 0)
-  {
-    i = 9;
-  }
-  h[i] = res;
-  sound->per_channel[channel].formant_history_index = i;
+  float res =
+    (float) ( c[0] * in +
+              c[1] * h[0] +
+              c[2] * h[1] +
+              c[3] * h[2] +
+              c[4] * h[3] +
+              c[5] * h[4] +
+              c[6] * h[5] +
+              c[7] * h[6] +
+              c[8] * h[7] +
+              c[9] * h[8] +
+              c[10] * h[9]
+             );
+
+  h[9] = h[8];
+  h[8] = h[7];
+  h[7] = h[6];
+  h[6] = h[5];
+  h[5] = h[4];
+  h[4] = h[3];
+  h[3] = h[2];
+  h[2] = h[1];
+  h[1] = h[0];
+  h[0] = (float) res;
   return res;
 }
 

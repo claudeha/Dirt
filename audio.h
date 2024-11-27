@@ -61,7 +61,6 @@ typedef struct {
 
 typedef struct {
   double formant_history[10];
-  int    formant_history_index;
   t_vcf  vcf;
   t_crs  coarsef;
   t_vcf  hpf;
